@@ -17,8 +17,6 @@ const restaurantData = {
   dishName3: '',
   dishImage3: '',
   tip: '',
-  features: [],
-  tags: [],
 };
 
 function generateIndividualRestaurantData() {
@@ -34,40 +32,25 @@ function generateIndividualRestaurantData() {
 
   restaurantData.tip = faker.lorem.sentence();
 
-  function getRandomInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  let randomInteger = getRandomInteger(1, 10);
-
-  // STRETCH CONSIDERATION: prevent duplicate faker results
-  while (restaurantData.features.length < randomInteger) {
-    restaurantData.features.push(faker.commerce.productAdjective());
-  }
-
-  randomInteger = getRandomInteger(1, 20);
-
-  while (restaurantData.tags.length < randomInteger) {
-    restaurantData.tags.push(faker.commerce.productAdjective());
-  }
-
   return restaurantData;
 }
 
 for (let restaurantCount = 0; restaurantCount < 100; restaurantCount += 1) {
   generateIndividualRestaurantData();
 
-  const columns = 'restaurant_name, dish_name1, dish_image1, dish_name2, dish_image2, dish_name3, dish_image3, tip, features, tags';
+  const columns = 'restaurant_name, dish_name1, dish_image1, dish_name2, dish_image2, dish_name3, dish_image3, tip';
 
-  const values = `'${restaurantData.restaurantName}', '${restaurantData.dishName1}', '${restaurantData.dishImage1}', '${restaurantData.dishName2}', '${restaurantData.dishImage2}', '${restaurantData.dishName3}', '${restaurantData.dishImage3}', '${restaurantData.tip}', '${restaurantData.features}', '${restaurantData.tags}'`;
+  const values = `"${restaurantData.restaurantName}", '${restaurantData.dishName1}', '${restaurantData.dishImage1}', '${restaurantData.dishName2}', '${restaurantData.dishImage2}', '${restaurantData.dishName3}', '${restaurantData.dishImage3}', '${restaurantData.tip}'`;
 
-  connection.query(`INSERT INTO Restaurants (${columns}) VALUES (${values})`, (error, results) => {
+  connection.query(`INSERT INTO restaurants (${columns}) VALUES (${values})`, (error) => {
     if (error) {
-      console.log(error);
+      console.log(JSON.stringify(restaurantData));
       return;
     }
-
-    console.log(results);
+    if (restaurantCount === 99) {
+      console.log('Restaurants seeded!');
+      seedArticles();
+    }
   });
 }
 
@@ -76,44 +59,70 @@ for (let restaurantCount = 0; restaurantCount < 100; restaurantCount += 1) {
 const articleData = {
   articleTitle: '',
   articleImage: '',
-  articleUrl: '',
-  articleTags: [],
 };
 
 function generateIndividualArticleData() {
   articleData.articleTitle = faker.lorem.sentence();
-
   articleData.articleImage = faker.image.nightlife();
-  articleData.articleUrl = faker.lorem.slug();
-
-  function getRandomInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  // STRETCH CONSIDERATION: prevent duplicate faker results
-
-  const randomInteger = getRandomInteger(1, 20);
-
-  while (articleData.articleTags.length < randomInteger) {
-    articleData.articleTags.push(faker.commerce.productAdjective());
-  }
-
   return articleData;
 }
 
-for (let articleCount = 0; articleCount < 100; articleCount += 1) {
-  generateIndividualArticleData();
+function getRandomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-  const columns = 'title, image, url, tags';
+// STRETCH CONSIDERATION: prevent duplicate faker results
 
-  const values = `'${articleData.articleTitle}', '${articleData.articleImage}', '${articleData.articleUrl}', '${articleData.articleTags}'`;
+function seedArticles() {
+  let randomInteger;
 
-  connection.query(`INSERT INTO Articles (${columns}) VALUES (${values})`, (error, results) => {
-    if (error) {
-      console.log(error);
-      return;
+  for (let articleCount = 1; articleCount <= 100; articleCount += 1) {
+    const columns = 'restaurant_id, title, image';
+    randomInteger = getRandomInteger(1, 5);
+
+    for (let i = 1; i <= randomInteger; ++i) {
+      generateIndividualArticleData();
+
+      const values = `'${articleCount}', '${articleData.articleTitle}', '${articleData.articleImage}'`;
+
+      connection.query(`INSERT INTO articles (${columns}) VALUES (${values})`, (error) => {
+        if (error) {
+          console.log(articleData);
+          return;
+        }
+        if (articleCount === 100 && i === randomInteger) {
+          console.log('Articles seeded!');
+          seedFeatures();
+        }
+      });
     }
+  }
+}
 
-    console.log(results);
-  });
+// STRETCH CONSIDERATION: prevent duplicate faker results
+
+function seedFeatures() {
+  let randomInteger;
+  let fakeTitle;
+
+  for (let count = 1; count <= 100; count += 1) {
+    const columns = 'restaurant_id, title';
+    randomInteger = getRandomInteger(1, 5);
+
+    for (let i = 1; i <= randomInteger; ++i) {
+      fakeTitle = faker.commerce.productAdjective();
+
+      const values = `'${count}', '${fakeTitle}'`;
+
+      connection.query(`INSERT INTO features (${columns}) VALUES (${values})`, (error) => {
+        if (error) {
+          console.log(values);
+          return;
+        }
+        if (count === 100 && i === randomInteger) {
+          console.log('Features seeded!');
+        }
+      });
+    }
+  }
 }

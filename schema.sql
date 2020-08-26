@@ -41,7 +41,7 @@ CREATE TABLE `articles` (
   FOREIGN KEY (`restaurant_id`) REFERENCES restaurants(id)
 );
 
-CREATE TABLE `feautures` (
+CREATE TABLE `features` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `restaurant_id` INTEGER,
   `title` VARCHAR(255) NULL DEFAULT NULL,
