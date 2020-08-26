@@ -59,7 +59,7 @@ class ZagatMentions extends React.Component {
       <MentionsContainer>
         <ArticleContainer href="#" className='article'>
         {this.props.articles.map((article, i) => (
-          <div>
+          <div key={i}>
             <ArticleImage src={article.image} alt='dining' />
             <ArticleTitle>{article.title}</ArticleTitle>
           </div>

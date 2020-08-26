@@ -84,7 +84,6 @@ class App extends React.Component {
   fetchFeatures(i) {
     axios.get(`http://localhost:3003/api/features/${i}`)
       .then(({ data }) => {
-        console.log(data)
         this.setState({ features: data });
       })
       .catch((error) => {
