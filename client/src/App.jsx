@@ -48,7 +48,7 @@ class App extends React.Component {
 
   componentDidMount() {
     let self = this;
-    axios.get(`http://3.12.103.128:3003/api/tips/${window.location.pathname.substring(1, window.location.pathname.length - 1)}`)
+    axios.get(`http://localhost:3003/api/tips/${window.location.pathname.substring(1, window.location.pathname.length - 1)}`)
     .then(function (response) {
       const data = response.data[0];
       self.setState({
@@ -76,7 +76,7 @@ class App extends React.Component {
     let self = this;
     const restaurantTags = self.state.tags.split(',');
 
-    axios.get(`http://3.12.103.128:3003/api/articles` + window.location.pathname.substring(0, window.location.pathname.length - 1))
+    axios.get(`http://localhost:3003/api/articles` + window.location.pathname.substring(0, window.location.pathname.length - 1))
 
     .then(function (articles) {
       articles.data.map((article) => {

@@ -56,7 +56,7 @@
   "scripts": {
     "airbnb": "eslint --ignore-path .gitignore .",
     "build": "webpack --config webpack.config.js",
-    "schema": "mysql -u root -pyourpassword zagatTips < schema.sql;",
+    "schema": "mysql -u root < schema.sql;",
     "seed": "node database/seed.js",
     "server": "nodemon server/index.js",
     "test": "jest"

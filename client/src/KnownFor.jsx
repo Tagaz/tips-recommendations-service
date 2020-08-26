@@ -27,7 +27,7 @@ const KnownForFont = styled.figcaption`
   text-align: center;
 `;
 
-const icons = ['http://3.12.103.128:3003/dist/icons/kids.svg', 'http://3.12.103.128:3003/dist/icons/lunch.svg', 'http://3.12.103.128:3003/dist/icons/placeholder.svg', 'http://3.12.103.128:3003/dist/icons/takeout.svg'];
+const icons = ['http://localhost:3003/dist/icons/kids.svg', 'http://localhost:3003/dist/icons/lunch.svg', 'http://localhost:3003/dist/icons/placeholder.svg', 'http://localhost:3003/dist/icons/takeout.svg'];
 
 class KnownFor extends React.Component {
   constructor(props) {
@@ -37,8 +37,8 @@ class KnownFor extends React.Component {
   render() {
     return (
       <KnownForContainer>
-        {this.props.features.split(',').map((feature) => (
-          <figure className='feature'>
+        {this.props.features.split(',').map((feature, i) => (
+          <figure key={i} className='feature'>
             <KnownForIcon src={icons[Math.floor(Math.random() * (4))]} alt='icon'/>
             <KnownForFont>{feature}</KnownForFont>
           </figure>
