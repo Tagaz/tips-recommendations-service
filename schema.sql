@@ -14,9 +14,7 @@ USE zagatTips;
 --
 -- ---
 
-DROP TABLE IF EXISTS `Restaurants`;
-
-CREATE TABLE `Restaurants` (
+CREATE TABLE `restaurants` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `restaurant_name` VARCHAR(255) NULL DEFAULT NULL,
   `dish_name1` VARCHAR(255) NULL DEFAULT NULL,
@@ -26,8 +24,6 @@ CREATE TABLE `Restaurants` (
   `dish_name3` VARCHAR(255) NULL DEFAULT NULL,
   `dish_image3` VARCHAR(255) NULL DEFAULT NULL,
   `tip` VARCHAR(255) NULL DEFAULT NULL,
-  `features` VARCHAR(255) NULL DEFAULT NULL,
-  `tags` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -36,15 +32,21 @@ CREATE TABLE `Restaurants` (
 --
 -- ---
 
-DROP TABLE IF EXISTS `Articles`;
-
-CREATE TABLE `Articles` (
+CREATE TABLE `articles` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `restaurant_id` INTEGER,
   `title` VARCHAR(255) NULL DEFAULT NULL,
   `image` VARCHAR(255) NULL DEFAULT NULL,
-  `url` VARCHAR(255) NULL DEFAULT NULL,
-  `tags` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`restaurant_id`) REFERENCES restaurants(id)
+);
+
+CREATE TABLE `feautures` (
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `restaurant_id` INTEGER,
+  `title` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`restaurant_id`) REFERENCES restaurants(id)
 );
 
 -- ---
