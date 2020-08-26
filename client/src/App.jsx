@@ -83,6 +83,7 @@ class App extends React.Component {
         const articleTags = article.tags.split(',')
         for (var i = 0; i < articleTags.length; i++) {
           if (restaurantTags.indexOf(articleTags[i] !== -1 && articles.data.indexOf(article) === -1)) {
+            console.log(article)
             self.setState({
               articles: article
             })
