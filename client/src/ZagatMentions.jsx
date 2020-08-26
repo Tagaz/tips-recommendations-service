@@ -58,9 +58,13 @@ class ZagatMentions extends React.Component {
     return (
       <MentionsContainer>
         <ArticleContainer href="#" className='article'>
-          <ArticleImage src={this.props.articles.image} alt='dining'/>
-          <ArticleTitle>{this.props.articles.title}</ArticleTitle>
-        </ArticleContainer>
+        {this.props.articles.map((article, i) => (
+          <div>
+            <ArticleImage src={article.image} alt='dining' />
+            <ArticleTitle>{article.title}</ArticleTitle>
+          </div>
+            ))}
+            </ArticleContainer>
         <ButtonContainer>
           <ButtonStyling type="button">SHOW ALL</ButtonStyling>
         </ButtonContainer>

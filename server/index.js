@@ -28,7 +28,19 @@ app.get(`/api/tips/:id`, (req, res) => {
 });
 
 app.get(`/api/articles/:id`, (req, res) => {
-  db.getRestaurantArticles((error, data) => {
+  const restaurantId = req.params.id;
+  db.getRestaurantArticles(restaurantId, (error, data) => {
+    if (error) {
+      console.log('Error at server/articles GET request');
+    } else {
+      res.send(data);
+    }
+  });
+});
+
+app.get(`/api/features/:id`, (req, res) => {
+  const restaurantId = req.params.id;
+  db.getRestaurantFeatures(restaurantId, (error, data) => {
     if (error) {
       console.log('Error at server/articles GET request');
     } else {

@@ -73,14 +73,18 @@ class App extends React.Component {
       .then(({ data }) => {
         this.setState({ articles: data });
       })
+      .then(() => {
+        this.fetchFeatures(i);
+      })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  fetchFeaturess(i) {
+  fetchFeatures(i) {
     axios.get(`http://localhost:3003/api/features/${i}`)
       .then(({ data }) => {
+        console.log(data)
         this.setState({ features: data });
       })
       .catch((error) => {

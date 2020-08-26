@@ -12,7 +12,7 @@ connection.connect((err) => {
 });
 
 const getRestaurantInfo = function (restaurantId, callback) {
-  connection.query(`SELECT * FROM Restaurants WHERE id = ${restaurantId}`, (error, results) => {
+  connection.query(`SELECT * FROM restaurants WHERE id = ${restaurantId}`, (error, results) => {
     if (error) {
       callback(error, null);
       return;
@@ -21,13 +21,22 @@ const getRestaurantInfo = function (restaurantId, callback) {
   });
 };
 
-const getRestaurantArticles = function (callback) {
-  connection.query(`SELECT * FROM Articles`, (error, results) => {
+const getRestaurantArticles = function (restaurantId, callback) {
+  connection.query(`SELECT * FROM articles WHERE restaurant_id = ${restaurantId}`, (error, results) => {
     if (error) {
       callback(error, null);
       return;
     }
+    callback(null, results);
+  });
+};
 
+const getRestaurantFeatures = function (restaurantId, callback) {
+  connection.query(`SELECT * FROM features WHERE restaurant_id = ${restaurantId}`, (error, results) => {
+    if (error) {
+      callback(error, null);
+      return;
+    }
     callback(null, results);
   });
 };
@@ -35,4 +44,5 @@ const getRestaurantArticles = function (callback) {
 module.exports = {
   getRestaurantInfo,
   getRestaurantArticles,
+  getRestaurantFeatures,
 };
