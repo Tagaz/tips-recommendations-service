@@ -35,7 +35,7 @@ class App extends React.Component {
       dishName3: '',
       dishImage3: '',
       tip: '',
-      features: '',
+      features: [],
       articles: [],
     };
   }
@@ -58,7 +58,6 @@ class App extends React.Component {
           dishName3: data.dish_name3,
           dishImage3: data.dish_image3,
           tip: data.tip,
-          features: data.features,
         });
       })
       .then(() => {
@@ -73,6 +72,16 @@ class App extends React.Component {
     axios.get(`http://localhost:3003/api/articles/${i}`)
       .then(({ data }) => {
         this.setState({ articles: data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  fetchFeaturess(i) {
+    axios.get(`http://localhost:3003/api/features/${i}`)
+      .then(({ data }) => {
+        this.setState({ features: data });
       })
       .catch((error) => {
         console.log(error);
